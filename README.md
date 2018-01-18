@@ -5,3 +5,4 @@ Created for specialized VM deployment using PowerCLI in a VMware vSphere enviorn
 
 Requirement: PowerCLI must be installed on Windows.
 Requirement: PowerCLI initilzation file in this location:
+C:/Program Files (x86)/VMware/Infrastructure/vSphere PowerCLI/Scripts/Initialize-PowerCLIEnvironment.ps1
