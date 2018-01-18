@@ -1,49 +1,47 @@
 ﻿Add-PSSnapin VMware.VimAutomation.Core
 . 'C:/Program Files (x86)/VMware/Infrastructure/vSphere PowerCLI/Scripts/Initialize-PowerCLIEnvironment.ps1'
 
-#######################################################################################################################
-###### Initilization ends here, my script begins here ######
-#######################################################################################################################
+###### Initilization done ######
 
-# Enter vCenter IP address here:
+# ENTER vCenter IP address or FQDN:
 $vCenterAddress = "x.x.x.x"
 
-# Enter vCenter Username here:
-$vCenterUser = "example"
+# ENTER vCenter Username:
+$vCenterUser = "example_username"
 
-# Enter vCenter Password here:
-$vPassword = "example"
+# ENTER vCenter Password:
+$vPassword = "example_password"
 
-#Connecting to vCenter...
-Connect-VIServer $vCenterAddress -User $vCenterUser -Password $vPassword -WarningAction SilentlyContinue
+# ENTER the number of VMs to be deployed:
+$VMquantity = 1
 
-# Change these variables based on the VMs you would like deploy:
-# Number of VMs:
-$VMquantity = 75
-
-# Host to deploy the VMs to:
+# ENTER the name of the host to deploy the VMs to:
 $hostName = "x.x.x.x"
 
-# VM prefix name (0 based, modify the index if necessary):
-$VMprefix = "scale"
+# ENTER VM prefix:
+$VMprefix = "example_vm_prefix_name"
 
-# Name of the VM template / clone to use in the vCenter:
-#$template = "rhel7-vd"
-$clone = Get-VM rhel7-vd
+# ENTER the template or vm name that will be cloned, or skip this step if using OVF deployment method:
+$template = "example_template_name"
+$clone = Get-VM example_vm_name
 
-# Datastore prefix name that the VM will deployed on (0 based, modify the index if necessary):
-$datastorePrefix = "scale_ds_300g."
+# ENTER datastore prefix:
+$datastorePrefix = "example_datastore_prefix_name"
 
-# Name of the cluster to deploy to (only if datastores can be accessed from all hosts):
-#$clusterName = "Cluster1"
+# ENTER name of the cluster to deploy VMs to (when using a cluster and only if datastores can be accessed from all hosts):
+#$clusterName = "example_cluster_name"
 
-#Modify this value if you would like to offset the VM deployment:
-$index = 75
+# MODIFY this value if you would like to offset the VM name and datastore deployment:
+$index = 0
 
-#File path to the OVF if this is the deployment method:
-#$sourcePath = "C:\Users\Administrator\Desktop\rhel7-vd.ovf"
+# ENTER file path to the OVF, or skip this step if not using the OVF deployment method:
+$sourcePath = "C:\ExampleFilePath"
 
-# Deploys in a loop, additional VM cloning starts everytime one finishes
+# Connecting to vCenter...
+Connect-VIServer $vCenterAddress -User $vCenterUser -Password $vPassword -WarningAction SilentlyContinue
+
+# Deploys in a loop, additional VM cloning starts everytime one finishes...
+# UNCOMMENT the method intended for VM deployment:
 1..$VMquantity | foreach {
     $VMname = $VMprefix + $index
     $datastoreName = $datastorePrefix + $index
@@ -57,7 +55,7 @@ $index = 75
     #New-vm -Name $VMname -ResourcePool $clusterName -Template $template -Datastore $datastoreName -DiskStorageFormat Thin -ErrorAction stop
 
     # For cloning
-    $DeployVM = New-VM -Name $VMname -VM $clone -Datastore $datastoreName -DiskStorageFormat Thin -VMHost $hostName -ErrorAction stop
+    #$DeployVM = New-VM -Name $VMname -VM $clone -Datastore $datastoreName -DiskStorageFormat Thin -VMHost $hostName -ErrorAction stop
     
     $index = $index + 1
     Start-VM $VMname -Confirm:$false
