@@ -9,6 +9,6 @@ C:/Program Files (x86)/VMware/Infrastructure/vSphere PowerCLI/Scripts/Initialize
 
 
 Files:
-AddDatastores - Add datastores to a ESX host from 3PAR LUNs already exported to the host
+AddDatastores - Add datastores to a ESX host from 3PAR LUNs already exported to the host.
 DeployVMs - Deploy VMs, with no OS customization, in a loop, on precreated datastores, 3 different methods available.
 InvokeCommand - Invoke a command/script on a certain number of VMs in a loop.
