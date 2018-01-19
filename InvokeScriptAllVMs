@@ -1,0 +1,43 @@
+Add-PSSnapin VMware.VimAutomation.Core
+. 'C:/Program Files (x86)/VMware/Infrastructure/vSphere PowerCLI/Scripts/Initialize-PowerCLIEnvironment.ps1'
+
+###### Initilization done ######
+
+# ENTER vCenter IP address or FQDN:
+$vCenterAddress = "x.x.x.x"
+
+# ENTER vCenter Username here:
+$vCenterUser = "example_vcenter_username"
+
+# ENTER vCenter Password here:
+$vPassword = "example_vcenter_password"
+
+# ENTER VM prefix name:
+$VMprefix = "example_vm_prefix"
+
+# ENTER the path for the script to invoke on selected VMs:
+$invoke = "/example_script_file_location &"
+
+# ENTER the guest operating system username for all of the selected VMs:
+$gUsername = "example_guestOS_username"
+
+# ENTER the guest operating system password for all of the selected VMs, given username:
+$gPassword = "example_guestOS_password"
+
+# ENTER script type (Bat, Powershell, or Bash):
+$scriptType = "Bash"
+
+
+###### End of user input ######
+
+#Connecting to vCenter...
+Connect-VIServer $vCenterAddress -User $vCenterUser -Password $vPassword -WarningAction SilentlyContinue
+
+$VMsearch = $VMprefix + "*"
+$vms = Get-VM -Name $VMsearch
+
+foreach($vm in $vms) {
+
+    Invoke-VMScript -VM $vm -ScriptText $invoke -GuestUser $gUsername -GuestPassword $gPassword -ScriptType $scriptType -Force
+
+}
