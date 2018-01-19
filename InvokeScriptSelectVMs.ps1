@@ -39,7 +39,7 @@ $scriptType = "Bash"
 #Connecting to vCenter...
 Connect-VIServer $vCenterAddress -User $vCenterUser -Password $vPassword -WarningAction SilentlyContinue
 
-#Loop through VMs
+#Loop through selected VMs...
 1..$VMquantity | foreach {
     $VMname = $VMprefix + $index
     $vm = Get-VM $VMname
